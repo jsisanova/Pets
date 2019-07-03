@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -74,10 +75,30 @@ public class CatalogActivity extends AppCompatActivity {
         // Create and/or open a database to read from it
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
+        // Define a projection that specifies which columns from the database you will actually use after this query.
+        String[] projection = {
+                PetContract.PetEntry._ID,
+                PetContract.PetEntry.COLUMN_PET_NAME,
+                PetContract.PetEntry.COLUMN_PET_BREED,
+                PetContract.PetEntry.COLUMN_PET_GENDER,
+                PetContract.PetEntry.COLUMN_PET_WEIGHT
+        };
+
+        // Perform a query on the pets table
+        Cursor cursor = db.query(
+                PetContract.PetEntry.TABLE_NAME,     // The table to query
+                projection,                          // The array of columns to return (pass null to get all)
+                null,                       // The columns for the WHERE clause
+                null,                    // The values for the WHERE clause
+                null,                        // don't group the rows
+                null,                         // don't filter by row groups
+                null                         // The sort order
+        );
+
         // Perform this raw SQL query "SELECT * FROM pets"
         // to get a Cursor that contains all rows from the pets table.
-        Log.e(LOG_TAG, "Test: SELECT * FROM " + PetContract.PetEntry.TABLE_NAME);
-        Cursor cursor = db.rawQuery("SELECT * FROM " + PetContract.PetEntry.TABLE_NAME, null);
+//        Log.e(LOG_TAG, "Test: SELECT * FROM " + PetContract.PetEntry.TABLE_NAME);
+//        Cursor cursor = db.rawQuery("SELECT * FROM " + PetContract.PetEntry.TABLE_NAME, null);
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
             // pets table in the database).
