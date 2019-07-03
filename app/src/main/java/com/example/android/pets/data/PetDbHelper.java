@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class PetDbHelper extends SQLiteOpenHelper {
 
-    public static final String LOG_TAG = PetDbHelper.class.getSimpleName();
-
     /** Name of the database file */
     private static final String DATABASE_NAME = "shelter.db";
 
