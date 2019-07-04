@@ -32,6 +32,9 @@ import android.widget.TextView;
 import com.example.android.pets.data.PetContract;
 import com.example.android.pets.data.PetDbHelper;
 
+/**
+ * Displays list of pets that were entered and stored in the app.
+ */
 public class CatalogActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = CatalogActivity.class.getName();
