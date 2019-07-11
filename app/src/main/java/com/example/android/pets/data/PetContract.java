@@ -57,12 +57,14 @@ public final class PetContract {
 
         /**
          * The MIME type of the {@link #CONTENT_URI} for a list of pets.
+         * Directory MIME type: vnd.android.cursor.dir/com.example.android.pet/pets
          */
         public static final String CONTENT_LIST_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PETS;
 
         /**
          * The MIME type of the {@link #CONTENT_URI} for a single pet.
+         * Item MIME type: vnd.android.cursor.item/com.example.android.pet/pets
          */
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PETS;
