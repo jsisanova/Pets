@@ -118,7 +118,15 @@ public class EditorActivity extends AppCompatActivity {
         String breedString = mBreedEditText.getText().toString().trim();
         String weightString = mWeightEditText.getText().toString().trim();
         // Convert string into integer
-        int weight = Integer.parseInt(weightString);
+//        int weight = Integer.parseInt(weightString);
+        int weight ;
+        try {
+            weight = Integer.parseInt(weightString);
+        // If we try to parse to an integer value when the weightString value is empty, which means "" (No user input)
+        // This throws an NumberFormatException because we are trying to convert an empty string to an integer.
+        } catch (NumberFormatException e){
+            weight = 0; // Set the weight to 0, because this is the default value in the database
+        }
 
         // Create a ContentValues object where column names are the keys,
         // and pet attributes from the editor are the values.
