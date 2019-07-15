@@ -148,15 +148,24 @@ public class EditorActivity extends AppCompatActivity implements
         String nameString = mNameEditText.getText().toString().trim();
         String breedString = mBreedEditText.getText().toString().trim();
         String weightString = mWeightEditText.getText().toString().trim();
-        // Convert string into integer
-//        int weight = Integer.parseInt(weightString);
-        int weight ;
-        try {
+        // If the weight is not provided by the user, don't try to parse the empty string into an
+        // integer value. Use 0 by default.
+        int weight = 0;
+        if (!TextUtils.isEmpty(weightString)) {
             weight = Integer.parseInt(weightString);
-            // If we try to parse to an integer value when the weightString value is empty, which means "" (No user input)
-            // This throws an NumberFormatException because we are trying to convert an empty string to an integer.
-        } catch (NumberFormatException e){
-            weight = 0; // Set the weight to 0, because this is the default value in the database
+        }
+
+        // Check if this is supposed to be a new pet and check if all the fields in the editor are blank
+        if (mCurrentPetUri == null &&  TextUtils.isEmpty(nameString) && TextUtils.isEmpty(breedString) &&
+                TextUtils.isEmpty(weightString) && mGender == PetEntry.GENDER_UNKNOWN) {
+            // Since no fields were modified, we can return early without creating a new pet.
+            // No need to create ContentValues and no need to do any ContentProvider operations.
+            return;
+        }
+
+        if (TextUtils.isEmpty(nameString)) {
+            Toast.makeText(this, getString(R.string.insert_pet_name_toast), Toast.LENGTH_LONG).show();
+            return;
         }
 
         // Create a ContentValues object where column names are the keys,
@@ -218,7 +227,7 @@ public class EditorActivity extends AppCompatActivity implements
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 // Save pet to database
-               savePet();
+                savePet();
                 // Exit  editor activity and return automatically to catalog activity
                 finish();
                 return true;
@@ -247,8 +256,8 @@ public class EditorActivity extends AppCompatActivity implements
                 PetEntry.COLUMN_PET_WEIGHT };
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,             // Parent activity context
-            mCurrentPetUri,                               // Query the content URI for the current pet
-            projection,                                   // Columns to include in the resulting Cursor
+                mCurrentPetUri,                               // Query the content URI for the current pet
+                projection,                                   // Columns to include in the resulting Cursor
                 null,                            // No selection clause
                 null,                         // No selection arguments
                 null);                           // Default sort order

@@ -9,7 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.android.pets.R;
 import com.example.android.pets.data.PetContract.PetEntry;
 
 /**
@@ -169,7 +171,7 @@ public class PetProvider extends ContentProvider {
             throw new IllegalArgumentException("Pet requires a name");
         }
 
-        // Check that the gender is valid
+            // Check that the gender is valid
         // Cannot be NULL. Must equal one of these constants: GENDER_MALE, GENDER_FEMALE, or GENDER_UNKNOWN.
         Integer gender = values.getAsInteger(PetEntry.COLUMN_PET_GENDER);
         if (gender == null || !PetEntry.isValidGender(gender)) {
