@@ -281,7 +281,6 @@ public class EditorActivity extends AppCompatActivity implements
             case R.id.action_delete:
                 // Pop up confirmation dialog for deletion
                 showDeleteConfirmationDialog();
-
                 return true;
             // Respond to a click on the "UP" arrow button in the app bar
             case android.R.id.home:
